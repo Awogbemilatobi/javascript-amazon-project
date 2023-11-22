@@ -1,4 +1,4 @@
-const products = [
+export const products = [
   {
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
     image: "images/products/athletic-cotton-socks-6-pairs.jpg",
@@ -656,5 +656,20 @@ const products = [
       "apparel",
       "mens"
     ]
-  }
-];
+  },
+  {
+    id: "id1",
+    image: "images/products/umbrella.jpg",
+    name: "Men's Full-Zip Hooded Fleece Sweatshirt",
+    rating: {
+      stars: 4.5,
+      count: 3157
+    },
+    priceCents: 2400,
+    keywords: [
+      "sweaters",
+      "hoodies",
+      "apparel",
+      "mens"
+    ]
+  }];
