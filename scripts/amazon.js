@@ -1,3 +1,5 @@
+import {cart} from '../data/cart.js';
+
 const products = [
     {
       id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
@@ -656,8 +658,23 @@ const products = [
         "apparel",
         "mens"
       ]
-    }
-  ];
+    },
+    {
+      id: "id1",
+      image: "images/products/umbrella.jpg",
+      name: "Men's Full-Zip Hooded Fleece Sweatshirt",
+      rating: {
+        stars: 4.5,
+        count: 3157
+      },
+      priceCents: 2400,
+      keywords: [
+        "sweaters",
+        "hoodies",
+        "apparel",
+        "mens"
+      ]
+    }  ];
 
 let productsHTML = '';
 
@@ -686,7 +703,7 @@ products.forEach((product) => {
                 </div>
 
                 <div class="product-quantity-container">
-                    <select>
+                    <select class="js-quantity-selector-${product.id}">
                     <option selected value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -702,7 +719,7 @@ products.forEach((product) => {
 
                 <div class="product-spacer"></div>
 
-                <div class="added-to-cart">
+                <div class="added-to-cart js-added-to-cart-${product.id}">
                     <img src="images/icons/checkmark.png">
                     Added
                 </div>
@@ -720,6 +737,7 @@ document.querySelectorAll('.js-add-to-cart').forEach((button) => {
     button.addEventListener('click', () => {
         const productId = button.dataset.productId; //convert product-name (kebab case) to productName (camelCase)
         let matchingItem;
+        let selectorValue = document.querySelector(`.js-quantity-selector-${productId}`).value;
         
         cart.forEach((item) => {
             if (productId === item.productId) {
@@ -728,21 +746,27 @@ document.querySelectorAll('.js-add-to-cart').forEach((button) => {
         });
 
         if (matchingItem) {
-            matchingItem.quantity += 1;
+            matchingItem.quantity += Number(selectorValue);
         }  else {
             cart.push({
                 productId: productId,
-                quantity: 1
+                quantity: Number(selectorValue)
             }) 
         }
-
+        
         let cartQuantity = 0;
 
         cart.forEach((item) => {
             cartQuantity += item.quantity;
         });
 
-        document.querySelector('.js-cart-quantity').innerHTML = `${cartQuantity}`;
+        document.querySelector('.js-cart-quantity').innerText = cartQuantity;
+
+        document.querySelector(`.js-added-to-cart-${productId}`).classList.add("added-to-cart-show");
+
+        setTimeout(() => {
+          document.querySelector(`.js-added-to-cart-${productId}`).classList.remove("added-to-cart-show");
+        }, 2000);
 
     });
 });
