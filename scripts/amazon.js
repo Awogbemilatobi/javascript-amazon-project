@@ -1,4 +1,4 @@
-import {cart} from '../data/cart.js';
+import {cart, saveToStorage, addToCart} from '../data/cart.js';
 import {products} from '../data/products.js';
 import {formatCurrency} from './utils/money.js';
 
@@ -60,24 +60,6 @@ products.forEach((product) => {
 
 document.querySelector('.js-products-grid').innerHTML = productsHTML;
 
-function addToCart (productId, selectorValue) {
-  let matchingItem;
-        
-        cart.forEach((cartItem) => {
-            if (productId === cartItem.productId) {
-                matchingItem = cartItem;
-            }
-        });
-
-        if (matchingItem) {
-            matchingItem.quantity += Number(selectorValue);
-        }  else {
-            cart.push({
-                productId: productId,
-                quantity: Number(selectorValue)
-            }) 
-        }
-    }
 
     function updateQuantity () {
       let cartQuantity = 0;
