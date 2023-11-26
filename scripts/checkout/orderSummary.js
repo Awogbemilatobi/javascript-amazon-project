@@ -3,12 +3,7 @@ import {products, getProduct} from '../../data/products.js';
 import {formatCurrency} from '../utils/money.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';  //dayjs library only exports one thing, so don't put in curly bracket (they used 'export default')
 import {deliveryOptions, getDeliveryOption} from '../../data/deliveryOptions.js';
-
-const today = dayjs();
-
-const deliveryDate = today.add(7, 'days'); //adds 7 days to todays date
-console.log(deliveryDate.format('dddd, MMMM, D')); //to display in an easy-toread-format
-
+import { renderPaymentSummary } from './paymentSummary.js';
 
 export function renderOrderSummary () {
       let cartSummaryHTML = '';
@@ -129,6 +124,7 @@ export function renderOrderSummary () {
           );
           container.remove();
           updateCartQuantity();
+          renderPaymentSummary();
         });
       }); 
 
@@ -183,6 +179,7 @@ export function renderOrderSummary () {
             const deliveryOptionId = element.dataset.deliveryOptionId;
             updateDeliveryOption(productId, deliveryOptionId);
             renderOrderSummary(); // recursion: when a function reruns itself
+            renderPaymentSummary(); //regenerate html
           })
         });
 }
